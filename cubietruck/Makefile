@@ -1,5 +1,5 @@
 
-OUTPUT_TMP_ROOTFS=../../_root
+OUTPUT_TMP_ROOTFS=/home/${USER}/work/cubietruck/_rootfs
 
 INSTALL_SD_DEV=/dev/sdb
 
@@ -31,6 +31,7 @@ ENV= ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
 help:
 	@echo "Usable targets:"
 	@echo "    all:                build kernel, modules, u-boot, script.bin and boot.scr"
+	@echo "    install_tmp:        install to temporary rootfs" $(OUTPUT_TMP_ROOTFS)
 	@echo "    install:            install to nfs, tftp and temporary rootfs"
 	@echo "    install_nfs:        install modules to nfs"
 	@echo "    install_tftp:       copy kernel to tftp"
@@ -62,7 +63,7 @@ $(INSTALL_NFS_ROOT):
 
 install: install_tmp install_nfs install_tftp
 
-install_tmp: $(OUTPUT_TMP_ROOTFS)/uImage modules_install boot.scr script.bin
+install_tmp: $(OUTPUT_TMP_ROOTFS)/boot/uImage modules_install boot.scr script.bin
 	cp boot.scr  $(OUTPUT_TMP_ROOTFS)/boot/
 	cp script.bin $(OUTPUT_TMP_ROOTFS)/boot/
 
@@ -72,7 +73,7 @@ install_nfs: $(KERNEL_SRC_DIR) $(INSTALL_NFS_ROOT)
 install_tftp: $(KERNEL_SRC_DIR)/arch/arm/boot/uImage $(TFTP_PATH)
 	cp $< $(TFTP_PATH)/
 
-$(OUTPUT_TMP_ROOTFS)/uImage: $(KERNEL_SRC_DIR)/arch/arm/boot/uImage $(OUTPUT_TMP_ROOTFS)
+$(OUTPUT_TMP_ROOTFS)/boot/uImage: $(KERNEL_SRC_DIR)/arch/arm/boot/uImage $(OUTPUT_TMP_ROOTFS)/boot
 	cp $< $@
 
 ####### U-Boot #################################################################
@@ -93,7 +94,7 @@ menuconfig: $(KERNEL_CONFIG) $(KERNEL_SRC_DIR)
 	make $(ENV) -C $(KERNEL_SRC_DIR) menuconfig
 	cp $(KERNEL_SRC_DIR)/.config $(KERNEL_CONFIG)
 
-$(KERNEL_SRC_DIR)/.config: $(KERNEL_SRC_DIR)
+$(KERNEL_SRC_DIR)/.config: $(KERNEL_SRC_DIR) $(KERNEL_CONFIG)
 	cp $(KERNEL_CONFIG) $(KERNEL_SRC_DIR)/.config
 
 uImage: $(KERNEL_SRC_DIR)/.config
