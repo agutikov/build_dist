@@ -1,4 +1,3 @@
-
 sources and default configs:
 ----------------------------
 
@@ -22,6 +21,7 @@ manual build howto:
 -------------------
 
 https://github.com/linux-sunxi/u-boot-sunxi/wiki
+
 http://linux-sunxi.org/Manual_build_howto
 
 
