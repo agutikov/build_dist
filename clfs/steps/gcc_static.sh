@@ -19,14 +19,15 @@ unpack()
 
 	tar xvjpf ${CLFS_DISTFILES_DIR}/gcc-4.7.3.tar.bz2 -C ./
 
-	cd gcc-4.7.3/
+	tar xvjpf ${CLFS_DISTFILES_DIR}/mpfr-3.1.2.tar.bz2 -C ./
+	tar xvjpf ${CLFS_DISTFILES_DIR}/gmp-5.1.2.tar.bz2 -C ./
+	tar xvzpf ${CLFS_DISTFILES_DIR}/mpc-1.0.1.tar.gz -C ./
 
-	tar xf ${CLFS_DISTFILES_DIR}/mpfr-3.1.2.tar.bz2
-	mv -v mpfr-3.1.2 mpfr
-	tar xf ${CLFS_DISTFILES_DIR}/gmp-5.1.2.tar.bz2
-	mv -v gmp-5.1.2 gmp
-	tar xf ${CLFS_DISTFILES_DIR}/mpc-1.0.1.tar.gz
-	mv -v mpc-1.0.1 mpc
+	cd gcc-4.7.3/
+	mv -v ../mpfr-3.1.2 mpfr
+	mv -v ../gmp-5.1.2 gmp
+	mv -v ../mpc-1.0.1 mpc
+
 }
 
 patch_step()
