@@ -14,11 +14,11 @@ unpack()
 
 install()
 {
+	rm -rf install_prefix
+	mkdir install_prefix
 	cd linux-3.0.80/
 	make mrproper
 	make ARCH=${CLFS_ARCH} headers_check
-	rm -rf ../install_prefix
-	mkdir ../install_prefix
 	make ARCH=${CLFS_ARCH} INSTALL_HDR_PATH=../install_prefix headers_install
 }
 

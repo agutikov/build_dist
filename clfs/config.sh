@@ -21,6 +21,8 @@ export CLFS_TARGET=arm-softfloat-linux-gnueabi
 export CLFS_ARCH=arm
 export CLFS_ARM_ARCH=armv6
 
+export LC_ALL=POSIX
+export PATH=${CLFS_CROSSTOOLS_PREFIX}/bin:/bin:/usr/bin
 
 
 export steps=(
