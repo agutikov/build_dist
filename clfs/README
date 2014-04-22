@@ -15,6 +15,7 @@ TODO:
 	7) проверять закачку хешем а не файлом-флагом если это архив
 	8) нормальное определение факта ошибки, сейчас всё время "successfully finished"
 	9) make опции, например -j5
+	10) predefined variables inside step scripts
 
 
 
@@ -65,7 +66,6 @@ linux headers				+
 glibc		shared objects		headers		tools
 					static libs
 gcc stage2	libgcc.so				+
-
 
 
 

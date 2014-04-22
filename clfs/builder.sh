@@ -154,6 +154,7 @@ do
 						then
 							${CLFS_SCRIPTS_DIR}/helper.sh $step $substep 2>&1 | tee ${CLFS_BUILD_DIR}/${step}/logs/$substep.txt
 						else
+							echo -e "To see logs you can do in another terminal:\n tail -f work/build/${step}/logs/${substep}.txt \n"
 							${CLFS_SCRIPTS_DIR}/helper.sh $step $substep > ${CLFS_BUILD_DIR}/${step}/logs/$substep.txt 2>&1
 						fi
 
