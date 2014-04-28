@@ -38,12 +38,12 @@ install()
 	mkdir -p install_prefix
 	cd musl-0.9.14
 
-	DESTDIR=${CLFS_BUILD_DIR}/libc_musl/install_prefix make install
+	DESTDIR=${STEP_BUILD_DIR}/install_prefix make install
 }
 
 merge()
 {
-	cp ./install_prefix/* -rv ${CLFS_SYSROOT_PREFIX}/
+	cp -a ./install_prefix/* ${CLFS_SYSROOT_PREFIX}/
 }
 
 __cmd_list=(

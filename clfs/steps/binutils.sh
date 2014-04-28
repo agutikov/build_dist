@@ -4,7 +4,6 @@
 download()
 {
 	wget -N http://ftp.gnu.org/gnu/binutils/binutils-2.23.2.tar.bz2 -P ${CLFS_DISTFILES_DIR}
-	wget -N http://patches.cross-lfs.org/embedded-dev/binutils-2.23.2-musl-1.patch -P ${CLFS_DISTFILES_DIR}
 }
 
 unpack()
@@ -13,54 +12,61 @@ unpack()
 	tar xvjpf ${CLFS_DISTFILES_DIR}/binutils-2.23.2.tar.bz2 -C ./
 }
 
-patch_step()
-{
-	cd binutils-2.23.2/
-	patch -Np1 -i ${CLFS_DISTFILES_DIR}/binutils-2.23.2-musl-1.patch
-}
 
 configure()
 {
 	rm -rf binutils-build
 	mkdir -pv binutils-build
+
 	cd binutils-build/
 
 	../binutils-2.23.2/configure \
-		--prefix=${CLFS_BUILD_DIR}/binutils/install_prefix \
+		--prefix=/usr \
 		--target=${CLFS_TARGET} \
 		--with-sysroot=${CLFS_SYSROOT_PREFIX} \
-		--disable-nls \
-		--disable-multilib
+		--disable-werror
+
+#		--disable-nls \
+#		--disable-multilib
 }
 
 build()
 {
 	cd binutils-build/
-	make configure-host
-	make
 
+	make
 }
 
 install()
 {
 	rm -rf install_prefix
 	mkdir install_prefix
+
 	cd binutils-build/
-	make install
+
+	make install DESTDIR=${STEP_BUILD_DIR}/install_prefix
+}
+
+filter()
+{
+	rm -rf filtered_prefix
+#	mkdir filtered_prefix
+	cp -av install_prefix filtered_prefix
+	rm -rfv filtered_prefix/usr/{info,lib,man,share}
 }
 
 merge()
 {
-	cp ./install_prefix/* -rv ${CLFS_CROSSTOOLS_PREFIX}/
+	cp -av ./filtered_prefix/usr/* ${CLFS_CROSSTOOLS_PREFIX}/
 }
 
 __cmd_list=(
-        download
-        unpack
-        patch_step
-        configure
-        build
+	download
+	unpack
+	configure
+	build
 	install
+	filter
 	merge
 )
 

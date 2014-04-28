@@ -1,5 +1,18 @@
 
 
+http://cross-lfs.org/view/clfs-embedded/arm
+
+http://gcc.gnu.org/onlinedocs/libstdc++/manual/configure.html
+http://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html
+
+http://www.gentoo.org/proj/en/base/embedded/handbook/?part=1&chap=2
+
+
+
+Can't install glibc_headers
+!!!!!!!!!! патчи на glibc
+
+
 
 
 BUG:
@@ -16,7 +29,7 @@ TODO:
 	8) нормальное определение факта ошибки, сейчас всё время "successfully finished"
 	9) make опции, например -j5
 	10) predefined variables inside step scripts
-
+	11) что делать с sysroot (конкретно с опцией --with-sysroot) если надо собрать relocatable тулчейн
 
 
 conifg.sh - файл настроек используемый в скриптах и содержащий все глобальные настройки

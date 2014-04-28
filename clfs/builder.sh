@@ -31,10 +31,10 @@ done
 
 mkdir -p ${CLFS_DISTFILES_DIR}
 mkdir -p ${CLFS_WORK_DIR}
-mkdir -p ${CLFS_SYSROOT_PREFIX}
-mkdir -p ${CLFS_CROSSTOOLS_PREFIX}
 mkdir -p ${CLFS_BUILD_DIR}
 mkdir -p ${CLFS_TARGET_ROOTFS}
+mkdir -p ${CLFS_CROSSTOOLS_PREFIX}
+mkdir -p ${CLFS_SYSROOT_PREFIX}
 
 export FORCE_REBUILD=""
 export INTERACTIVE=""
@@ -148,7 +148,9 @@ do
 						rm -f ${CLFS_BUILD_DIR}/${step}/flags/$substep.success
 
 						_PREV_PWD=$PWD
-						cd ${CLFS_BUILD_DIR}/${step}
+
+						export STEP_BUILD_DIR=${CLFS_BUILD_DIR}/${step}
+						cd ${STEP_BUILD_DIR}
 
 						if [ "$VERBOSE" == "1" ]
 						then
